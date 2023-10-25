@@ -1,0 +1,14 @@
+[
+  {
+    "id": "1",
+    "origem": "AAA",
+    "destino": "BBB",
+    "tamanho": 100
+  },
+  {
+    "id": "2",
+    "origem": "BBB",
+    "destino": "CCC",
+    "tamanho": 200
+  }
+]

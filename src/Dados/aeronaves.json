@@ -1,0 +1,22 @@
+[
+  {
+    "type": "AeronaveParticular",
+    "prefixo": "PP-123",
+    "velocidadeCruzeiro": 500,
+    "autonomia": 1500,
+    "responsavelManutencao": "João da Silva",
+    "nomeCompanhia": null,
+    "pesoMaximo": null,
+    "maxPassageiros": null
+  },
+  {
+    "type": "AeronaveCarga",
+    "prefixo": "CC-456",
+    "velocidadeCruzeiro": 600,
+    "autonomia": 2000,
+    "responsavelManutencao": null,
+    "nomeCompanhia": "Transportadora ABC",
+    "pesoMaximo": 10000,
+    "maxPassageiros": null
+  }
+]
