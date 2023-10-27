@@ -1,4 +1,5 @@
 import { AeronaveParticular, AeronaveComercial, AeronaveCarga, AeronavePassageiro } from "../Modelos/Aeronave.js";
+import { validate, typedef } from "bycontract";
 import fs from "fs";
 
 export class ServicoAeronave {
@@ -8,6 +9,7 @@ export class ServicoAeronave {
         this.#aeronaves = [];
     }
 
+    // Carrega os dados das aeronaves a partir do arquivo JSON
     carregaAeronaves() {
         try {
             const data = fs.readFileSync("src\\Dados\\aeronaves.json");
@@ -28,42 +30,8 @@ export class ServicoAeronave {
             console.error("Erro ao carregar aeronaves: " + error.message);
         }
     }
-    /*
-    carregaAeronaves() {
-        try {
-            const data = fs.readFileSync("aeronaves.json");
-            const aeronavesData = JSON.parse(data);
-
-            for (const aeronaveData of aeronavesData) {
-                let aeronave;
-
-                switch (aeronaveData.type) {
-                    case "AeronaveParticular":
-                        aeronave = new AeronaveParticular(aeronaveData.prefixo, aeronaveData.velocidadeCruzeiro, aeronaveData.autonomia, aeronaveData.responsavelManutencao);
-                        break;
-                    case "AeronaveComercial":
-                        aeronave = new AeronaveComercial(aeronaveData.prefixo, aeronaveData.velocidadeCruzeiro, aeronaveData.autonomia, aeronaveData.nomeCompanhia);
-                        break;
-                    case "AeronaveCarga":
-                        aeronave = new AeronaveCarga(aeronaveData.prefixo, aeronaveData.velocidadeCruzeiro, aeronaveData.autonomia, aeronaveData.nomeCompanhia, aeronaveData.pesoMaximo);
-                        break;
-                    case "AeronavePassageiro":
-                        aeronave = new AeronavePassageiro(aeronaveData.prefixo, aeronaveData.velocidadeCruzeiro, aeronaveData.autonomia, aeronaveData.nomeCompanhia, aeronaveData.maxPassageiros);
-                        break;
-                    default:
-                        console.error("Tipo de aeronave desconhecido: " + aeronaveData.type);
-                        continue;
-                }
-
-                this.#aeronaves.push(aeronave);
-            }
-
-            console.log("Aeronaves carregadas com sucesso.");
-        } catch (error) {
-            console.error("Erro ao carregar aeronaves: " + error.message);
-        }
-    }
-    */
+    
+    // Cria uma nova aeronave com os dados fornecidos
     criarAeronave(tipo, dados) {
         try {
             let aeronave;
@@ -93,6 +61,7 @@ export class ServicoAeronave {
         }
     }
 
+    // Salva os dados das aeronaves no arquivo JSON
     salvarAeronaves() {
         try {
             const aeronavesData = this.#aeronaves.map(aeronave => {
@@ -115,18 +84,20 @@ export class ServicoAeronave {
         }
     }
 
+    // Adiciona uma aeronave à lista
     adicionarAeronave(aeronave) {
-        // Se não tiver aeronave com o mesmo prefixo, adicione na lista
+        
         const aeronaveExistente = this.#aeronaves.find(existingAeronave => existingAeronave.prefixo === aeronave.prefixo);
-    
+        // Se não tiver aeronave com o mesmo prefixo, adicione na lista
         if (aeronaveExistente) {
             throw new Error(`Já existe uma aeronaves com o prefixo ${aeronave.prefixo}`);
         }
     
         this.#aeronaves.push(aeronave);
-        console.log("Aerovia adicionada com sucesso.");
+        console.log("Aeronave adicionada com sucesso.");
     }
 
+    // Remove uma aeronave com base no prefixo
     removerAeronave(prefixo) {
         const index = this.#aeronaves.findIndex(aeronave => aeronave.prefixo === prefixo);
         if (index !== -1) {
@@ -137,6 +108,7 @@ export class ServicoAeronave {
         }
     }
 
+    // Lista as aeronaves registradas
     listarAeronaves() {
         this.#aeronaves.forEach((aeronave, index) => {
             console.log(`Aeronave #${index + 1}:`);

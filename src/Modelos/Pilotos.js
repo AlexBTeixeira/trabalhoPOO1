@@ -1,17 +1,23 @@
 import { validate, typedef } from "bycontract";
 
+// Classe Piloto
 export class Piloto {
     #matricula;
     #nome;
     #habilitacaoAtiva;
 
+    // Construtor da classe Piloto
     constructor(matricula, nome, habilitacaoAtiva) {
+        // Valida os tipos dos argumentos conforme as especificações
         validate(arguments, ["String", "String", "Boolean"]);
+        
+        // Inicializa as propriedades da classe
         this.#matricula = matricula;
         this.#nome = nome;
         this.#habilitacaoAtiva = habilitacaoAtiva;
     }
 
+    // Métodos getter para as propriedades da classe
     get matricula() {
         return this.#matricula;
     }
@@ -24,11 +30,13 @@ export class Piloto {
         return this.#habilitacaoAtiva;
     }
 
-    set habilitacaoAtiva(Boolean) {
-        this.#habilitacaoAtiva = Boolean;
+    // Método setter para ativar ou desativar a habilitação do piloto
+    set habilitacaoAtiva(estado) {
+        this.#habilitacaoAtiva = estado;
     }
 
-     toString() {
-        return `matricula: ${this.#matricula}, nome: ${this.#nome}, habilitacao: ${this.#habilitacaoAtiva}`;
+    // Método toString para exibir informações do piloto
+    toString() {
+        return `matrícula: ${this.#matricula}, nome: ${this.#nome}, habilitação ativa: ${this.#habilitacaoAtiva}`;
     }
 }

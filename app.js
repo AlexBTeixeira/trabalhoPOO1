@@ -46,11 +46,15 @@ servicoAerovias.criarAerovia("2", "BBB", "CCC", 200);
 console.log("Aerovias registradas:");
 servicoAerovias.listarAerovias();
 
-servicoAerovias.removerAerovia(1);
+servicoAerovias.removerAerovia("1");
 
 console.log("Aerovias registradas após remoção:");
 servicoAerovias.listarAerovias();
+
 servicoAerovias.salvarAerovias();
+
+console.log("Pequisando Aerovia:");
+servicoAerovias.recupera('BBV','CCC')
 
 console.log("//--------------------- Execucação Para Pilotos ---------------------\\")
 
@@ -64,5 +68,8 @@ servicoPilotos.listarPilotos();
 servicoPilotos.ativarHabilitacao("P001");
 servicoPilotos.desativarHabilitacao("P001");
 servicoPilotos.removerPiloto("P001");
+
+console.log("Recuperando Piloto");
+servicoPilotos.recupera("P002");
 
 servicoPilotos.salvarPilotos();

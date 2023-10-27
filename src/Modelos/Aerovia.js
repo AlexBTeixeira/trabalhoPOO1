@@ -1,33 +1,38 @@
 import { validate, typedef } from "bycontract";
 
-// ClasseAeronave
+// Classe Aerovia
 export class Aerovia {
     #id;
     #origem;
     #destino;
     #tamanho;
 
-    constructor(id, origem, destino,tamanho) {
-        validate(arguments, ["String", "String","String","number"]);
+    // Construtor da classe Aerovia
+    constructor(id, origem, destino, tamanho) {
+        // Valida os tipos dos argumentos conforme as especificações
+        validate(arguments, ["String", "String", "String", "number"]);
 
+        // Faz as validações necessárias, conforme a especificação
         if (id <= 0) {
-            throw new Error(`Identificador invalido: ${id}`);
+            throw new Error(`Identificador inválido: ${id}`);
         }
-        
+
         if (origem.length !== 3 || destino.length !== 3) {
-            throw new Error("Os campos origem e destino não podem ter mais ou menos que 3 letras");
+            throw new Error("Os campos origem e destino devem ter exatamente 3 letras.");
         }
 
         if (tamanho <= 0) {
             throw new Error(`Tamanho inválido: ${tamanho}`);
         }
 
+        // Inicializa as propriedades da classe
         this.#id = id;
         this.#origem = origem;
         this.#destino = destino;
         this.#tamanho = tamanho;
     }
 
+    // Métodos getter para as propriedades da classe
     get id() {
         return this.#id;
     }
@@ -44,7 +49,8 @@ export class Aerovia {
         return this.#tamanho;
     }
 
-     toString() {
+    // Método toString para exibir informações da aerovia
+    toString() {
         return `id: ${this.#id}, origem: ${this.#origem}, destino: ${this.#destino}, tamanho: ${this.#tamanho}`;
     }
 }

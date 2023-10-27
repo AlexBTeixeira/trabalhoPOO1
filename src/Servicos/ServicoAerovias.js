@@ -1,4 +1,5 @@
 import { Aerovia } from "../Modelos/Aerovia.js";
+import { validate, typedef } from "bycontract";
 import fs from "fs";
 
 export class ServicoAerovia {
@@ -8,6 +9,7 @@ export class ServicoAerovia {
         this.#aerovias = [];
     }
 
+    // Carrega as aerovias a partir de um arquivo JSON
     carregaAerovias() {
         try {
             const data = fs.readFileSync("src\\Dados\\aerovias.json");
@@ -30,6 +32,7 @@ export class ServicoAerovia {
         }
     }
 
+    // Cria uma nova aerovia
     criarAerovia(id, origem, destino, tamanho) {
         try {
             const aerovia = new Aerovia(id, origem, destino, tamanho);
@@ -40,6 +43,7 @@ export class ServicoAerovia {
         }
     }
 
+    // Salva as aerovias em um arquivo JSON
     salvarAerovias() {
         try {
             const aeroviasData = this.#aerovias.map(aerovia => {
@@ -58,20 +62,22 @@ export class ServicoAerovia {
         }
     }
 
+    // Adiciona uma aerovia à lista
     adicionarAerovia(aerovia) {
-
-        // Se não tiver aeronave com o mesmo prefixo, adicione na lista
-        const aeroviaexistente = this.#aerovias.find(existingAerovia => existingAerovia.id === aerovia.id);
+        // Verifica se já existe uma aerovia com o mesmo ID na lista
+        const aeroviaExistente = this.#aerovias.find(existingAerovia => existingAerovia.id === aerovia.id);
     
-        if (aeroviaexistente) {
-            throw new Error(`Já existe uma aerovia com o prefixo ${aerovia.id}`);
+        if (aeroviaExistente) {
+            throw new Error(`Já existe uma aerovia com o ID ${aerovia.id}`);
         }
     
         this.#aerovias.push(aerovia);
         console.log("Aerovia adicionada com sucesso.");
     }
 
+    // Remove uma aerovia da lista pelo ID
     removerAerovia(id) {
+        validate(arguments, ["String"]);
         const index = this.#aerovias.findIndex(aerovia => aerovia.id === id);
         if (index !== -1) {
             this.#aerovias.splice(index, 1);
@@ -81,6 +87,7 @@ export class ServicoAerovia {
         }
     }
 
+    // Lista todas as aerovias
     listarAerovias() {
         this.#aerovias.forEach((aerovia, index) => {
             console.log(`Aerovia #${index + 1}:`);
@@ -88,4 +95,27 @@ export class ServicoAerovia {
             console.log();
         });
     }
+
+    // Recupera aerovias com base na origem e destino
+    recupera(origem, destino) {
+        validate(arguments, ["String", "String"]);
+
+        // Filtra as aerovias com a origem e destino fornecidos
+        const aeroviasFiltradas = this.#aerovias.filter(aerovia => aerovia.origem === origem && aerovia.destino === destino);
+        
+        if (aeroviasFiltradas.length > 0) {
+
+            aeroviasFiltradas.forEach((aerovia, index) => {
+                console.log(`Aerovia #${index + 1}:`);
+                console.log(aerovia.toString());
+                console.log();
+            })
+            return aeroviasFiltradas;
+        } else {
+            console.error(`Nenhuma aerovia encontrada com origem: ${origem} e destino: ${destino}`);
+            return [];
+        }
+    }
+    
+
 }
